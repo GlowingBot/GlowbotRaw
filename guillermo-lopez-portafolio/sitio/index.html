@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guillermo López · Fotografía</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Geist:wght@300..700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F6F3}
+a{color:#111111;text-decoration:none}
+a:hover{color:#333333}
+a:focus-visible,button:focus-visible{outline:2px solid #111111;outline-offset:3px;border-radius:4px}
+.btn{transition:background-color .2s cubic-bezier(.16,1,.3,1),transform .2s cubic-bezier(.16,1,.3,1)}
+.btn:hover{background:#333333 !important;color:#FFFFFF}
+.btn:active{transform:scale(.98)}
+.shot{overflow:hidden}
+.shot img{transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.shot:hover img{transform:scale(1.04)}
+.ul{background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .5s cubic-bezier(.16,1,.3,1)}
+.ul:hover{background-size:100% 1px}
+.srow h3{transition:transform .6s cubic-bezier(.16,1,.3,1),color .4s cubic-bezier(.16,1,.3,1)}
+.srows:hover .srow h3{color:rgba(243,241,234,.32)}
+.srows .srow:hover h3{color:#F3F1EA;transform:translateX(16px)}
+.mail svg{transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.mail:hover svg{transform:translate(4px,-4px)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes heroZoom{from{transform:scale(1.12);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes heroOut{to{transform:scale(1.18);filter:blur(6px) brightness(.55)}}
+@keyframes titleOut{to{transform:translateY(-160px);opacity:0}}
+@keyframes letterIn{from{opacity:0;transform:translateY(45%) rotate(4deg)}to{opacity:1;transform:none}}
+@keyframes slideIn{from{transform:translateX(14%);opacity:0;letter-spacing:.08em}to{transform:none;opacity:1}}
+@keyframes clipIn{from{clip-path:inset(22% 0 0 0 round 8px)}to{clip-path:inset(0 0 0 0 round 8px)}}
+@keyframes imgSettle{from{transform:scale(1.25)}to{transform:scale(1)}}
+@keyframes nameIn{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes nameOut{from{opacity:1}to{opacity:0}}
+@keyframes stackOut{to{transform:scale(.88);filter:brightness(.35);border-radius:16px}}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.peek{position:absolute;left:0;top:0;width:300px;height:200px;object-fit:cover;border-radius:8px;pointer-events:none;z-index:2;transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .35s cubic-bezier(.16,1,.3,1)}
+.srow{position:relative}
+@media (hover:none){.peek{display:none}.heat{display:none}}
+@media (prefers-reduced-motion: reduce){.heat{display:none}}
+.track{display:flex;width:max-content;animation:marquee 38s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+@media (prefers-reduced-motion: no-preference){
+.hero-img{animation:heroZoom 2.4s cubic-bezier(.16,1,.3,1) both}
+.hero-in{animation:fadeUp 1.2s .5s cubic-bezier(.16,1,.3,1) both}
+@supports (animation-timeline: view()){
+.hero-img{animation:heroZoom 2.4s cubic-bezier(.16,1,.3,1) both,heroOut linear both;animation-timeline:auto,view();animation-range:normal,exit 0% exit 100%}
+.hero-in{animation:fadeUp 1.2s .5s cubic-bezier(.16,1,.3,1) both,titleOut linear both;animation-timeline:auto,view();animation-range:normal,exit 0% exit 60%}
+h2.reveal .ch{display:inline-block;animation:letterIn linear both;animation-timeline:view()}
+figure.reveal{animation:clipIn linear both;animation-timeline:view();animation-range:entry 0% cover 40%}
+figure.reveal img{animation:imgSettle linear both;animation-timeline:view();animation-range:entry 0% cover 60%}
+}
+}
+@supports not (animation-timeline: view()){.stack-ui .pname:not(:first-child){display:none}.stack-inner{animation:none !important}}
+@media (prefers-reduced-motion: reduce){.track{animation:none}.stack-inner{animation:none !important}.pname{animation:none !important}.stack-ui .pname:not(:first-child){display:none}}
+
+.heat-dot{position:absolute;left:0;top:0;border-radius:50%;filter:blur(10px)}
+</style>
+<script src="js/main.js" defer></script>
+</head>
+<body>
+<main style="position: relative; background: #F7F6F3; color: #111111; font-family: 'Geist', ui-sans-serif, sans-serif; font-size: 16px; line-height: 1.6;">
+<div id="heat" class="heat" aria-hidden="true" style="position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1;"></div>
+
+
+<section id="inicio" style="position: relative; height: 100vh; height: 100dvh; min-height: 560px; overflow: hidden; background: #111111; color: #FFFFFF;">
+<img class="hero-img" src="img/hero-berm-publico.jpg" alt="Rider tomando un berm a fondo mientras la banda lo mira desde la orilla" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 66% 40%; display: block;">
+<div aria-hidden="true" style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 58%, rgba(0,0,0,0.62) 100%);"></div>
+
+<header style="position: absolute; z-index: 3; top: 0; left: 0; right: 0; max-width: calc(1600px + 2 * clamp(16px, 3vw, 40px)); margin: 0 auto; box-sizing: border-box; padding: 24px clamp(16px, 3vw, 40px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 32px;">
+<a href="#inicio" style="color: #FFFFFF; font-size: 15px; font-weight: 600; letter-spacing: -0.01em;">Guillermo López</a>
+<nav aria-label="Principal" style="display: flex; flex-wrap: wrap; gap: 4px 28px;">
+<a class="ul" href="#trabajo" style="color: rgba(255,255,255,0.82); font-size: 14px; padding: 10px 0;">Proyectos</a>
+<a class="ul" href="#sobre-mi" style="color: rgba(255,255,255,0.82); font-size: 14px; padding: 10px 0;">Sobre mí</a>
+<a class="ul" href="#contacto" style="color: #FFFFFF; font-size: 14px; padding: 10px 0; text-decoration: underline; text-underline-offset: 6px;">Contacto</a>
+</nav>
+</header>
+
+<div class="hero-in" style="position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; max-width: calc(1600px + 2 * clamp(16px, 3vw, 40px)); margin: 0 auto; box-sizing: border-box; padding: 0 clamp(16px, 3vw, 40px) 32px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px 48px;">
+<div style="display: flex; flex-direction: column; gap: 12px; max-width: 100%;">
+<span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.06em; color: rgba(255,255,255,0.78);">Fotografío el movimiento · CDMX</span>
+<h1 style="margin: 0; font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(28px, 5.6vw, 96px); line-height: 0.95; letter-spacing: -0.005em; text-transform: uppercase; color: #FFFFFF;"><span style="display: block; white-space: nowrap;">El momento no vuelve.</span><span style="display: block; white-space: nowrap;">La foto se queda.</span></h1>
+</div>
+</div>
+</section>
+
+<section id="trabajo" style="padding: 0;">
+<div id="trabajo-track" style="position: relative; z-index: 2; height: 520vh;">
+<div style="position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden;">
+<canvas id="ribbon" aria-label="Proyectos en una tira de fotos" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block;"></canvas>
+<div style="position: absolute; z-index: 3; top: clamp(24px, 4vh, 48px); left: max(clamp(16px, 3vw, 40px), calc((100% - 1600px) / 2)); right: max(clamp(16px, 3vw, 40px), calc((100% - 1600px) / 2)); pointer-events: none;"><h2 class="reveal" style="margin: 0; font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(64px, 9vw, 160px); line-height: 0.86; letter-spacing: -0.01em; text-transform: uppercase;"><span aria-hidden="true"><span class="ch" style="animation-range: entry 0% entry 60%;">P</span><span class="ch" style="animation-range: entry 3% entry 63%;">r</span><span class="ch" style="animation-range: entry 6% entry 66%;">o</span><span class="ch" style="animation-range: entry 9% entry 69%;">y</span><span class="ch" style="animation-range: entry 12% entry 72%;">e</span><span class="ch" style="animation-range: entry 15% entry 75%;">c</span><span class="ch" style="animation-range: entry 18% entry 78%;">t</span><span class="ch" style="animation-range: entry 21% entry 81%;">o</span><span class="ch" style="animation-range: entry 24% entry 84%;">s</span></span><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Proyectos</span></h2></div>
+<div style="position: absolute; left: max(clamp(16px, 3vw, 40px), calc((100% - 1600px) / 2)); right: max(clamp(16px, 3vw, 40px), calc((100% - 1600px) / 2)); bottom: 36px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 24px;">
+<span id="cur-name" style="font-family: 'Anton', sans-serif; font-size: clamp(32px, 3vw, 48px); line-height: 1; text-transform: uppercase; color: #111111;">[Proyecto 01]</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #787774;"><span id="cur-meta">[Disciplina · Año]</span> · <span id="cur-num">01</span> / 07</span>
+</div>
+</div>
+</div>
+</section>
+
+
+
+<section id="servicios" style="padding: clamp(96px, 10vw, 160px) clamp(16px, 3vw, 40px); background: #0E0E0D; color: #F3F1EA;">
+
+<div style="position: relative; z-index: 2; max-width: 1600px; margin: 0 auto; display: flex; flex-direction: column; gap: 48px;">
+<p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #9C988F;">Para quién trabajo</p>
+<div id="srows" class="srows" style="position: relative; display: flex; flex-direction: column;">
+<img id="peek" class="peek" src="img/servicios-riders-hoodie.jpg" alt="" aria-hidden="true" style="opacity: 0;">
+<div class="srow" data-peek="img/servicios-riders-hoodie.jpg" data-rot="-4" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 48px; padding: 16px 0 18px; border-bottom: 1px solid rgba(243,241,234,0.16);">
+<h3 style="margin: 0; font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(64px, 9vw, 160px); line-height: 0.86; letter-spacing: -0.01em; text-transform: uppercase; color: #F3F1EA;">Atletas</h3>
+<p style="margin: 0; flex: 0 1 460px; display: flex; gap: 32px; font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.5; color: #D6D3CA;"><span style="color: #9C988F;">01</span><span>Tu mejor salto, truco o jugada, planeado y bien iluminado, para que lo cuentes siempre.</span></p>
+</div>
+<div class="srow" data-peek="img/servicios-marcas-rayos.jpg" data-rot="3" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 48px; padding: 16px 0 18px; border-bottom: 1px solid rgba(243,241,234,0.16);">
+<h3 style="margin: 0; font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(64px, 9vw, 160px); line-height: 0.86; letter-spacing: -0.01em; text-transform: uppercase; color: #F3F1EA;">Marcas</h3>
+<p style="margin: 0; flex: 0 1 460px; display: flex; gap: 32px; font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.5; color: #D6D3CA;"><span style="color: #9C988F;">02</span><span>Tu producto en el momento real del atleta, con derechos de uso claros.</span></p>
+</div>
+<div class="srow" data-peek="img/machetazo-berm-publico.jpg" data-rot="-2" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 48px; padding: 16px 0 18px; border-bottom: 1px solid rgba(243,241,234,0.16);">
+<h3 style="margin: 0; font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(64px, 9vw, 160px); line-height: 0.86; letter-spacing: -0.01em; text-transform: uppercase; color: #F3F1EA;">Eventos</h3>
+<p style="margin: 0; flex: 0 1 460px; display: flex; gap: 32px; font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; line-height: 1.5; color: #D6D3CA;"><span style="color: #9C988F;">03</span><span>La acción, el grito y la banda, entregados mientras el evento sigue vivo.</span></p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="sobre-mi" style="padding: clamp(48px, 5vw, 80px) clamp(16px, 3vw, 40px) clamp(120px, 12vw, 200px); background: #0E0E0D; color: #F3F1EA;">
+<div style="max-width: 1600px; margin: 0 auto; display: flex; flex-direction: column;">
+<div style="position: relative; z-index: 2; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding: 14px 0; border-top: 1px solid #F3F1EA; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;">
+<span>Guillermo López</span>
+<span style="color: #9C988F;">CDMX</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 48px clamp(24px, 2.5vw, 40px); margin-top: clamp(48px, 5vw, 80px);">
+<div style="position: relative; z-index: 2; flex: 0 1 640px; max-width: 640px; display: flex; flex-direction: column; gap: 40px;">
+<h2 class="reveal" style="margin: 0; font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(64px, 9vw, 160px); line-height: 0.86; letter-spacing: -0.01em; text-transform: uppercase; color: #F3F1EA; white-space: nowrap;"><span aria-hidden="true"><span class="ch" style="animation-range: entry 0% entry 60%;">S</span><span class="ch" style="animation-range: entry 3% entry 63%;">o</span><span class="ch" style="animation-range: entry 6% entry 66%;">b</span><span class="ch" style="animation-range: entry 9% entry 69%;">r</span><span class="ch" style="animation-range: entry 12% entry 72%;">e</span> <span class="ch" style="animation-range: entry 15% entry 75%;">m</span><span class="ch" style="animation-range: entry 18% entry 78%;">í</span></span><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Sobre mí</span></h2>
+<p style="margin: 0; font-family: 'Geist', sans-serif; font-weight: 400; font-size: clamp(16px, 1.25vw, 19px); line-height: 1.65; letter-spacing: -0.005em; max-width: 560px; color: #F3F1EA;">Llevo más de 15 años diseñando, y la fotografía me enseñó a mirar distinto: a esperar el instante que el atleta va a querer contar.</p>
+<p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 15px; line-height: 1.65; color: #BDB9B0;">También ruedo, así que sé dónde pararme sin estorbar y cuándo pedir otra repetición.</p>
+<dl style="margin: 0; border-top: 1px solid rgba(243,241,234,0.16);">
+<div style="display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid rgba(243,241,234,0.16);"><dt style="font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #9C988F;">Base</dt><dd style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.02em; color: #F3F1EA;">Ciudad de México</dd></div>
+<div style="display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid rgba(243,241,234,0.16);"><dt style="font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #9C988F;">Disciplinas</dt><dd style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.02em; color: #F3F1EA;">MTB, BMX, skate y deporte urbano</dd></div>
+<div style="display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid rgba(243,241,234,0.16);"><dt style="font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #9C988F;">Equipo</dt><dd style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.02em; color: #F3F1EA;">Canon 90D · 70-200 · Godox AD200</dd></div>
+</dl>
+</div>
+<figure style="flex: 1 1 520px; max-width: 900px; margin: 0 calc(-1 * clamp(16px, 3vw, 40px)) 0 0; align-self: center; aspect-ratio: 1073 / 1101; background: #0E0E0D;"><img src="img/retrato-guillermo.jpg" alt="Retrato en blanco y negro de Guillermo López sobre fondo oscuro" style="width: 100%; height: 100%; object-fit: contain; object-position: 50% 50%; display: block;"></figure>
+</div>
+</div>
+</section>
+
+<section id="contacto" style="padding: clamp(120px, 12vw, 200px) clamp(16px, 3vw, 40px) 32px;">
+<div style="position: relative; z-index: 2; max-width: 1600px; margin: 0 auto; display: flex; flex-direction: column;">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 48px clamp(32px, 6vw, 120px);">
+<h2 class="reveal" style="margin: 0; font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(64px, 9vw, 160px); line-height: 0.86; letter-spacing: -0.01em; text-transform: uppercase;"><span aria-hidden="true"><span class="ch" style="animation-range: entry 0% entry 60%;">C</span><span class="ch" style="animation-range: entry 3% entry 63%;">o</span><span class="ch" style="animation-range: entry 6% entry 66%;">n</span><span class="ch" style="animation-range: entry 9% entry 69%;">t</span><span class="ch" style="animation-range: entry 12% entry 72%;">a</span><span class="ch" style="animation-range: entry 15% entry 75%;">c</span><span class="ch" style="animation-range: entry 18% entry 78%;">t</span><span class="ch" style="animation-range: entry 21% entry 81%;">o</span></span><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Contacto</span></h2>
+<div style="flex: 0 1 520px; display: flex; flex-direction: column; gap: 20px;">
+<p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #787774;">Nuevos proyectos · CDMX</p>
+<p style="margin: 0; font-family: 'Geist', sans-serif; font-size: clamp(16px, 1.25vw, 19px); line-height: 1.65; color: #2F3437; max-width: 440px;">Sesiones con atletas, contenido para marcas y cobertura de eventos. Cuéntame qué momento quieres que se quede.</p>
+<a class="mail" href="mailto:[tu-correo]" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; border-top: 1px solid #111111; border-bottom: 1px solid #111111; font-family: 'Geist', sans-serif; font-weight: 500; font-size: clamp(20px, 1.8vw, 26px); letter-spacing: -0.02em; color: #111111;"><span>[tu correo de foto]</span><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M8 7h9v9"></path></svg></a>
+<dl style="margin: 0;">
+<div style="display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid #DCDAD3;"><dt style="font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #787774;">Instagram</dt><dd style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.02em; color: #111111;">@glowbot.raw</dd></div>
+<div style="display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid #DCDAD3;"><dt style="font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #787774;">Servicios</dt><dd style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.02em; color: #111111;">Atletas · Marcas · Eventos</dd></div>
+</dl>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; margin-top: clamp(96px, 10vw, 160px); padding-top: 16px; border-top: 1px solid #DCDAD3; font-family: 'Geist Mono', monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #787774;">
+<span>© 2026 Guillermo López</span>
+<span>Fotografío el movimiento</span>
+<a href="#inicio" style="color: #111111; padding: 12px 0;">Volver arriba ↑</a>
+</div>
+</div>
+</section>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,111 @@
+import { defineField, defineType } from "sanity";
+import { galleryImageMember, imageWithAlt } from "./image";
+
+export const project = defineType({
+  name: "project",
+  title: "Proyecto",
+  type: "document",
+  orderings: [
+    {
+      title: "Orden",
+      name: "orderAsc",
+      by: [{ field: "order", direction: "asc" }],
+    },
+  ],
+  fields: [
+    defineField({
+      name: "title",
+      title: "Título",
+      type: "string",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: { source: "title", maxLength: 96 },
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "discipline",
+      title: "Disciplina",
+      type: "string",
+    }),
+    defineField({
+      name: "place",
+      title: "Lugar",
+      type: "string",
+    }),
+    defineField({
+      name: "date",
+      title: "Fecha",
+      type: "string",
+      description: "Mes y año, como se muestra en la ficha.",
+    }),
+    defineField({
+      name: "light",
+      title: "Luz",
+      type: "string",
+      description: "Equipo de luz.",
+    }),
+    defineField({
+      name: "riders",
+      title: "Riders",
+      type: "array",
+      of: [{ type: "string" }],
+      description: "Nombres, con su permiso.",
+    }),
+    defineField({
+      name: "summary",
+      title: "Resumen",
+      type: "text",
+      rows: 4,
+    }),
+    defineField({
+      name: "stat",
+      title: "Dato",
+      type: "object",
+      fields: [
+        defineField({
+          name: "number",
+          title: "Número",
+          type: "string",
+          description: "Ejemplo: 6",
+        }),
+        defineField({
+          name: "label",
+          title: "Etiqueta",
+          type: "text",
+          rows: 2,
+          description: "Ejemplo: atletas con más de 10 mil seguidores compartieron la serie",
+        }),
+      ],
+    }),
+    imageWithAlt({
+      name: "cover",
+      title: "Portada",
+      description:
+        "Horizontal o vertical. Arrastra el hotspot: ese punto es el encuadre de la tira.",
+    }),
+    defineField({
+      name: "gallery",
+      title: "Galería",
+      type: "array",
+      of: [galleryImageMember()],
+    }),
+    defineField({
+      name: "order",
+      title: "Orden",
+      type: "number",
+      description: "Posición en la tira. 1 es la primera foto.",
+      validation: (rule) => rule.required().integer().positive(),
+    }),
+  ],
+  preview: {
+    select: {
+      title: "title",
+      subtitle: "discipline",
+      media: "cover",
+    },
+  },
+});

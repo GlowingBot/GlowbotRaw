@@ -1,0 +1,357 @@
+:root {
+  --color-bg: #f7f6f3;
+  --color-text: #111111;
+  --color-secondary: #787774;
+  --color-line: #dcdad3;
+  --color-dark: #0e0e0d;
+  --color-dark-text: #f3f1ea;
+  --color-dark-secondary: #9c988f;
+  --gutter: clamp(16px, 3vw, 40px);
+  --content-max: 1600px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --title-size: clamp(64px, 9vw, 160px);
+  --title-leading: 0.86;
+  --hero-title-size: clamp(28px, 5.6vw, 96px);
+  --hero-title-leading: 0.95;
+}
+
+.vh-screen {
+  height: 100vh;
+  height: 100dvh;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-geist), ui-sans-serif, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.site h1,
+.site h2,
+.site h3 {
+  margin: 0;
+  font-family: var(--font-anton), sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.site h1 {
+  font-size: var(--hero-title-size);
+  line-height: var(--hero-title-leading);
+  letter-spacing: -0.005em;
+}
+
+.site h2,
+.site h3 {
+  font-size: var(--title-size);
+  line-height: var(--title-leading);
+  letter-spacing: -0.01em;
+}
+
+.site a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.site a:hover {
+  color: #333333;
+}
+
+.site a:focus-visible,
+.site button:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.btn {
+  transition:
+    background-color 0.2s var(--ease),
+    transform 0.2s var(--ease);
+}
+
+.btn:hover {
+  background: #333333 !important;
+  color: #ffffff;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.shot {
+  overflow: hidden;
+}
+
+.shot img {
+  transition: transform 1.2s var(--ease);
+}
+
+.shot:hover img {
+  transform: scale(1.04);
+}
+
+.ul {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.5s var(--ease);
+}
+
+.ul:hover {
+  background-size: 100% 1px;
+}
+
+.srow h3 {
+  transition:
+    transform 0.6s var(--ease),
+    color 0.4s var(--ease);
+}
+
+.srows:hover .srow h3 {
+  color: rgba(243, 241, 234, 0.32);
+}
+
+.srows .srow:hover h3 {
+  color: var(--color-dark-text);
+  transform: translateX(16px);
+}
+
+.mail svg {
+  transition: transform 0.5s var(--ease);
+}
+
+.mail:hover svg {
+  transform: translate(4px, -4px);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes heroZoom {
+  from {
+    transform: scale(1.12);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes heroOut {
+  to {
+    transform: scale(1.18);
+    filter: blur(6px) brightness(0.55);
+  }
+}
+
+@keyframes titleOut {
+  to {
+    transform: translateY(-160px);
+    opacity: 0;
+  }
+}
+
+@keyframes letterIn {
+  from {
+    opacity: 0;
+    transform: translateY(45%) rotate(4deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(14%);
+    opacity: 0;
+    letter-spacing: 0.08em;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes clipIn {
+  from {
+    clip-path: inset(22% 0 0 0 round 8px);
+  }
+  to {
+    clip-path: inset(0 0 0 0 round 8px);
+  }
+}
+
+@keyframes imgSettle {
+  from {
+    transform: scale(1.25);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes nameIn {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes nameOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes stackOut {
+  to {
+    transform: scale(0.88);
+    filter: brightness(0.35);
+    border-radius: 16px;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.peek {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 2;
+  transition:
+    transform 0.35s var(--ease),
+    opacity 0.35s var(--ease);
+}
+
+.srow {
+  position: relative;
+}
+
+@media (hover: none) {
+  .peek,
+  .heat {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heat {
+    display: none;
+  }
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: marquee 38s linear infinite;
+}
+
+.marquee:hover .track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-img {
+    animation: heroZoom 2.4s var(--ease) both;
+  }
+
+  .hero-in {
+    animation: fadeUp 1.2s 0.5s var(--ease) both;
+  }
+
+  @supports (animation-timeline: view()) {
+    .hero-img {
+      animation:
+        heroZoom 2.4s var(--ease) both,
+        heroOut linear both;
+      animation-timeline: auto, view();
+      animation-range: normal, exit 0% exit 100%;
+    }
+
+    .hero-in {
+      animation:
+        fadeUp 1.2s 0.5s var(--ease) both,
+        titleOut linear both;
+      animation-timeline: auto, view();
+      animation-range: normal, exit 0% exit 60%;
+    }
+
+    h2.reveal .ch {
+      display: inline-block;
+      animation: letterIn linear both;
+      animation-timeline: view();
+    }
+
+    figure.reveal {
+      animation: clipIn linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+
+    figure.reveal img {
+      animation: imgSettle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 60%;
+    }
+  }
+}
+
+@supports not (animation-timeline: view()) {
+  .stack-ui .pname:not(:first-child) {
+    display: none;
+  }
+
+  .stack-inner {
+    animation: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+
+  .stack-inner,
+  .pname {
+    animation: none !important;
+  }
+
+  .stack-ui .pname:not(:first-child) {
+    display: none;
+  }
+}
+
+.heat-dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  filter: blur(10px);
+}
