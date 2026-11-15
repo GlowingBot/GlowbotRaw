@@ -104,7 +104,7 @@ function layoutOf(value: unknown): ProjectPhoto["layout"] {
 
 function photo(image: GalleryImage): ProjectPhoto | null {
   if (!image?.asset?._ref) return null;
-  const src = imageUrl(image, 2400);
+  const src = imageUrl(image, 3840);
   if (!src) return null;
   return {
     src,

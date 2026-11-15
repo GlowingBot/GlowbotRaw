@@ -164,7 +164,7 @@ function normalize(data: HomeQuery | null): HomeContent {
   const settings = data?.settings;
   const projects: RibbonProject[] = (data?.projects ?? [])
     .map((project) => {
-      const cover = picture(project.cover ?? null, 2000);
+      const cover = picture(project.cover ?? null, 3200);
       const aspect = aspectOf(project.cover?.aspect);
       const name = text(project.title);
       const frame: RibbonProject = {
@@ -204,8 +204,8 @@ function normalize(data: HomeQuery | null): HomeContent {
 
   return {
     hero: {
-      image: picture(settings?.heroImage ?? null, 2400),
-      mobileImage: picture(settings?.heroImageMobile ?? null, 1600),
+      image: picture(settings?.heroImage ?? null, 3840),
+      mobileImage: picture(settings?.heroImageMobile ?? null, 2000),
       line1: text(settings?.heroTitle?.line1),
       line2: text(settings?.heroTitle?.line2),
     },
@@ -213,7 +213,7 @@ function normalize(data: HomeQuery | null): HomeContent {
     services,
     about: {
       paragraphs: paragraphs(settings?.aboutText),
-      portrait: picture(settings?.aboutPortrait ?? null, 1600),
+      portrait: picture(settings?.aboutPortrait ?? null, 2200),
       base: text(settings?.base),
       disciplines: text(settings?.disciplines),
     },

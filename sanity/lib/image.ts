@@ -6,7 +6,7 @@ const builder = projectId ? createImageUrlBuilder({ projectId, dataset }) : null
 export function imageUrl(source: SanityImageSource | null | undefined, width: number): string | null {
   if (!builder || !source) return null;
   try {
-    return builder.image(source).ignoreImageParams().width(width).fit("max").auto("format").url();
+    return builder.image(source).ignoreImageParams().width(width).fit("max").quality(90).auto("format").url();
   } catch {
     return null;
   }
