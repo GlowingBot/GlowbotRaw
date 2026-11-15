@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Local photos live in the reference site. The symlink breaks the Vercel build.
+/public/img
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
