@@ -164,7 +164,7 @@ function normalize(data: HomeQuery | null): HomeContent {
         pos: focal(project.cover?.hotspot),
         name,
         meta: [text(project.discipline), text(project.date)].filter(Boolean).join(" · "),
-        href: null,
+        href: text(project.slug) ? `/proyectos/${encodeURIComponent(text(project.slug))}` : null,
         label: name || undefined,
       };
       if (aspect) frame.ar = aspect;

@@ -342,6 +342,7 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
               left: edge,
               right: edge,
               bottom: 36,
+              pointerEvents: "none",
               display: "flex",
               flexWrap: "wrap",
               alignItems: "flex-end",
