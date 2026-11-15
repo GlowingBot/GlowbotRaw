@@ -43,10 +43,22 @@ export const project = defineType({
       description: "Mes y año, como se muestra en la ficha.",
     }),
     defineField({
-      name: "light",
-      title: "Luz",
+      name: "camera",
+      title: "Cámara",
       type: "string",
-      description: "Equipo de luz.",
+      description: "Ejemplo: Canon R5",
+    }),
+    defineField({
+      name: "lenses",
+      title: "Lentes",
+      type: "string",
+      description: "Ejemplo: 16-35mm f/2.8",
+    }),
+    defineField({
+      name: "light",
+      title: "Iluminación",
+      type: "string",
+      description: "Ejemplo: Godox AD200 fuera de cuadro",
     }),
     defineField({
       name: "riders",

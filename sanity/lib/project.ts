@@ -11,6 +11,8 @@ const PROJECT_QUERY = `{
     discipline,
     place,
     date,
+    camera,
+    lenses,
     light,
     riders,
     summary,
@@ -45,6 +47,8 @@ type ProjectQuery = {
     discipline?: string | null;
     place?: string | null;
     date?: string | null;
+    camera?: string | null;
+    lenses?: string | null;
     light?: string | null;
     riders?: Array<string | null> | null;
     summary?: string | null;
@@ -71,6 +75,8 @@ export type ProjectPageData = {
   discipline: string;
   place: string;
   date: string;
+  camera: string;
+  lenses: string;
   light: string;
   riders: string;
   summary: string;
@@ -130,6 +136,8 @@ function normalize(data: ProjectQuery | null, slug: string): ProjectPageData | n
     discipline: text(project.discipline),
     place: text(project.place),
     date: text(project.date),
+    camera: text(project.camera),
+    lenses: text(project.lenses),
     light: text(project.light),
     riders: (project.riders ?? []).map((rider) => text(rider)).filter(Boolean).join(", "),
     summary: text(project.summary),

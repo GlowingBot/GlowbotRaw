@@ -22,7 +22,7 @@ const metaBar: CSSProperties = {
 
 const factRow: CSSProperties = {
   display: "grid",
-  gridTemplateColumns: "96px minmax(0, 1fr)",
+  gridTemplateColumns: "112px minmax(0, 1fr)",
   gap: 12,
   padding: "9px 0",
   borderBottom: "1px solid #DCDAD3",
@@ -73,11 +73,14 @@ async function ProjectScreen({ params }: Pick<PageProps<"/proyectos/[slug]">, "p
 
   const meta = [project.place, project.date].filter(Boolean).join(" · ");
   const facts = [
-    ["Disciplina", project.discipline],
     ["Lugar", project.place],
+    ["Disciplina", project.discipline],
     ["Fecha", project.date],
-    ["Luz", project.light],
-    ["Riders", project.riders],
+  ].filter(([, value]) => value);
+  const gear = [
+    ["Cámara", project.camera],
+    ["Lentes", project.lenses],
+    ["Iluminación", project.light],
   ].filter(([, value]) => value);
   const next = project.next ?? { title: "Proyectos", href: "/#trabajo" };
 
@@ -117,7 +120,63 @@ async function ProjectScreen({ params }: Pick<PageProps<"/proyectos/[slug]">, "p
           </div>
           <RevealTitle text={project.title || "Proyecto"} style={{ margin: "clamp(24px, 3vw, 48px) 0 0" }} />
 
-          {facts.length || project.summary || project.statNumber || project.statLabel ? (
+          {project.summary || project.statNumber || project.statLabel ? (
+            <div style={{ marginTop: "clamp(48px, 5vw, 80px)", display: "flex", flexDirection: "column", gap: 40, maxWidth: 760 }}>
+              {project.summary ? (
+                <p
+                  style={{
+                    margin: 0,
+                    fontFamily: fontText,
+                    fontWeight: 400,
+                    fontSize: "clamp(16px, 1.25vw, 19px)",
+                    lineHeight: 1.65,
+                    letterSpacing: "-0.005em",
+                    color: "#111111",
+                  }}
+                >
+                  {project.summary}
+                </p>
+              ) : null}
+              {project.statNumber || project.statLabel ? (
+                <div style={{ display: "flex", alignItems: "flex-end", gap: 16 }}>
+                  {project.statNumber ? (
+                    <span
+                      style={{
+                        fontFamily: "var(--font-anton), sans-serif",
+                        fontSize: "clamp(44px, 5vw, 84px)",
+                        lineHeight: 0.95,
+                        letterSpacing: "-0.005em",
+                        color: "#111111",
+                      }}
+                    >
+                      {project.statNumber}
+                    </span>
+                  ) : null}
+                  {project.statLabel ? (
+                    <span
+                      style={{
+                        fontFamily: fontMono,
+                        fontSize: 12,
+                        letterSpacing: "0.06em",
+                        textTransform: "uppercase",
+                        lineHeight: 1.5,
+                        color: "#2F3437",
+                      }}
+                    >
+                      {project.statLabel.split("\n").map((line, index) => (
+                        <span key={`${index}-${line}`}>
+                          {index > 0 ? <br /> : null}
+                          {line}
+                        </span>
+                      ))}
+                    </span>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+
+          {facts.length || gear.length ? (
             <div
               style={{
                 display: "flex",
@@ -128,72 +187,8 @@ async function ProjectScreen({ params }: Pick<PageProps<"/proyectos/[slug]">, "p
                 marginTop: "clamp(48px, 5vw, 80px)",
               }}
             >
-              {facts.length ? (
-                <dl style={{ flex: "1 1 320px", maxWidth: 420, margin: 0, borderTop: "1px solid #DCDAD3" }}>
-                  {facts.map(([label, value]) => (
-                    <div key={label} style={factRow}>
-                      <dt style={factLabel}>{label}</dt>
-                      <dd style={factValue}>{value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              ) : null}
-              {project.summary || project.statNumber || project.statLabel ? (
-                <div style={{ flex: "1 1 520px", maxWidth: 760, display: "flex", flexDirection: "column", gap: 40 }}>
-                  {project.summary ? (
-                    <p
-                      style={{
-                        margin: 0,
-                        fontFamily: fontText,
-                        fontWeight: 400,
-                        fontSize: "clamp(16px, 1.25vw, 19px)",
-                        lineHeight: 1.65,
-                        letterSpacing: "-0.005em",
-                        maxWidth: 560,
-                        color: "#111111",
-                      }}
-                    >
-                      {project.summary}
-                    </p>
-                  ) : null}
-                  {project.statNumber || project.statLabel ? (
-                    <div style={{ display: "flex", alignItems: "flex-end", gap: 16 }}>
-                      {project.statNumber ? (
-                        <span
-                          style={{
-                            fontFamily: "var(--font-anton), sans-serif",
-                            fontSize: "clamp(44px, 5vw, 84px)",
-                            lineHeight: 0.95,
-                            letterSpacing: "-0.005em",
-                            color: "#111111",
-                          }}
-                        >
-                          {project.statNumber}
-                        </span>
-                      ) : null}
-                      {project.statLabel ? (
-                        <span
-                          style={{
-                            fontFamily: fontMono,
-                            fontSize: 12,
-                            letterSpacing: "0.06em",
-                            textTransform: "uppercase",
-                            lineHeight: 1.5,
-                            color: "#2F3437",
-                          }}
-                        >
-                          {project.statLabel.split("\n").map((line, index) => (
-                            <span key={`${index}-${line}`}>
-                              {index > 0 ? <br /> : null}
-                              {line}
-                            </span>
-                          ))}
-                        </span>
-                      ) : null}
-                    </div>
-                  ) : null}
-                </div>
-              ) : null}
+              {facts.length ? <FactList rows={facts} /> : null}
+              {gear.length ? <FactList rows={gear} /> : null}
             </div>
           ) : null}
 
@@ -223,6 +218,19 @@ async function ProjectScreen({ params }: Pick<PageProps<"/proyectos/[slug]">, "p
         </div>
       </section>
     </main>
+  );
+}
+
+function FactList({ rows }: { rows: string[][] }) {
+  return (
+    <dl style={{ flex: "1 1 320px", maxWidth: 520, margin: 0, borderTop: "1px solid #DCDAD3" }}>
+      {rows.map(([label, value]) => (
+        <div key={label} style={factRow}>
+          <dt style={factLabel}>{label}</dt>
+          <dd style={factValue}>{value}</dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 
