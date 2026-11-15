@@ -296,6 +296,10 @@ body {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
   .hero-img {
     animation: heroZoom 2.4s var(--ease) both;
   }
