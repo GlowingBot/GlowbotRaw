@@ -237,17 +237,17 @@ function FactList({ rows }: { rows: string[][] }) {
 function Gallery({ photos }: { photos: ProjectPhoto[] }) {
   const frames = framesOf(photos);
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginTop: "clamp(64px, 7vw, 112px)" }}>
+    <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-start", gap: 16, marginTop: "clamp(64px, 7vw, 112px)" }}>
       {frames.map((frame, index) => (
         <figure
           key={`${frame.photo.src}-${index}`}
           className="shot reveal"
           style={{
             flex: frame.flex,
+            minWidth: 0,
             margin: 0,
             borderRadius: 8,
             overflow: "hidden",
-            height: frame.height,
             background: "#EAEAEA",
           }}
         >
@@ -255,7 +255,7 @@ function Gallery({ photos }: { photos: ProjectPhoto[] }) {
           <img
             src={frame.photo.src}
             alt={frame.photo.alt}
-            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: frame.photo.position, display: "block" }}
+            style={{ width: "100%", height: "auto", display: "block" }}
           />
         </figure>
       ))}
@@ -264,8 +264,7 @@ function Gallery({ photos }: { photos: ProjectPhoto[] }) {
 }
 
 function framesOf(photos: ProjectPhoto[]) {
-  const frames: Array<{ photo: ProjectPhoto; flex: string; height: string }> = [];
-  let fulls = 0;
+  const frames: Array<{ photo: ProjectPhoto; flex: string }> = [];
   let pairs = 0;
 
   for (let index = 0; index < photos.length; index += 1) {
@@ -273,24 +272,17 @@ function framesOf(photos: ProjectPhoto[]) {
     const next = photos[index + 1];
     const paired = photo.layout !== "full" && next && next.layout !== "full";
     if (!paired) {
-      const lead = fulls === 0;
-      fulls += 1;
-      frames.push({
-        photo,
-        flex: "1 1 100%",
-        height: lead ? "clamp(420px, 50vw, 820px)" : "clamp(420px, 52vw, 860px)",
-      });
+      frames.push({ photo, flex: "1 1 100%" });
       continue;
     }
 
     const lead = pairs === 0;
     pairs += 1;
     const narrow = lead ? "360px" : "420px";
-    const height = lead ? "clamp(360px, 36vw, 600px)" : "clamp(360px, 34vw, 560px)";
     const wideFirst = photo.layout !== "5-7";
     frames.push(
-      { photo, flex: wideFirst ? "7 1 520px" : `5 1 ${narrow}`, height },
-      { photo: next, flex: wideFirst ? `5 1 ${narrow}` : "7 1 520px", height },
+      { photo, flex: wideFirst ? "7 1 520px" : `5 1 ${narrow}` },
+      { photo: next, flex: wideFirst ? `5 1 ${narrow}` : "7 1 520px" },
     );
     index += 1;
   }
