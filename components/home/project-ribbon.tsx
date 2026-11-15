@@ -22,6 +22,7 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const nameRef = useRef<HTMLSpanElement>(null);
   const infoRef = useRef<HTMLSpanElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
   const count = projects.length;
   const trackHeight = count > 0 ? `${(count - 1) * 70 + 100}vh` : "100vh";
   const first = projects[0];
@@ -140,7 +141,13 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
       const GT = phone ? 0 : Math.max(16, Math.min(40, W * 0.03));
       const FW = phone ? W : Math.min(1600 + 24, W - 2 * GT + 24);
       const BOT = H - 104;
-      const phoneTop = Math.max(108, Math.min(132, H * 0.16));
+      const titleBox = titleRef.current?.getBoundingClientRect();
+      const host = canvas.getBoundingClientRect();
+      const titleMid = titleBox
+        ? titleBox.top - host.top + titleBox.height / 2
+        : Math.max(24, Math.min(48, H * 0.04)) +
+          Math.max(64, Math.min(160, W * 0.09)) * 0.43;
+      const phoneTop = titleMid;
       const FH = phone
         ? Math.max(220, BOT - phoneTop)
         : Math.min(FW * 0.66, BOT - H * 0.1);
@@ -349,6 +356,7 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
             }}
           />
           <div
+            ref={titleRef}
             style={{
               position: "absolute",
               zIndex: 3,
