@@ -6,6 +6,9 @@ export type RibbonProject = {
   href: string | null;
   ar?: number;
   label?: string;
+  mobileSrc?: string;
+  mobilePos?: [number, number];
+  mobileAr?: number;
 };
 
 export type ServiceItem = {

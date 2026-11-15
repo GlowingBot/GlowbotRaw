@@ -6,6 +6,7 @@ import { fontDisplay, fontMono, RevealTitle } from "./reveal-title";
 
 type Frame = RibbonProject & {
   img?: HTMLImageElement;
+  mobileImg?: HTMLImageElement;
 };
 
 const edge = "max(clamp(16px, 3vw, 40px), calc((100% - 1600px) / 2))";
@@ -44,10 +45,16 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
     track.style.height = frameCount > 0 ? `${(frameCount - 1) * 70 + 100}vh` : "100vh";
     if (frameCount < 1) return;
     frames.forEach((frame) => {
-      if (!frame.src) return;
-      const image = new Image();
-      image.src = frame.src;
-      frame.img = image;
+      if (frame.src) {
+        const image = new Image();
+        image.src = frame.src;
+        frame.img = image;
+      }
+      if (frame.mobileSrc) {
+        const image = new Image();
+        image.src = frame.mobileSrc;
+        frame.mobileImg = image;
+      }
     });
 
     let tp = 0;
@@ -147,13 +154,25 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
           : 1 - Math.pow(-2 * ec + 2, 3) / 2;
       cp += (tp * (count - 1) - cp) * damp;
       setCurrent(Math.max(0, Math.min(count - 1, Math.round(cp))));
+      const phone = W <= 700;
       const top = BOT - FH;
       const full = FW - GAP;
+      const shown = (frame: Frame) => {
+        const useMobile = phone && Boolean(frame.mobileSrc);
+        const image =
+          useMobile && frame.mobileImg?.naturalWidth ? frame.mobileImg : frame.img;
+        return {
+          image,
+          pos: useMobile ? (frame.mobilePos ?? frame.pos) : frame.pos,
+          ar: useMobile ? frame.mobileAr : frame.ar,
+        };
+      };
       const ws = frames.map((frame) => {
+        const view = shown(frame);
         const aspect =
-          frame.img && frame.img.naturalWidth
-            ? frame.img.naturalWidth / frame.img.naturalHeight
-            : frame.ar || 1.6;
+          view.image && view.image.naturalWidth
+            ? view.image.naturalWidth / view.image.naturalHeight
+            : view.ar || 1.6;
         return aspect < 1.2 ? Math.min(full, FH * aspect) : full;
       });
       const xs: number[] = [];
@@ -211,14 +230,15 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
         ctx.rect(x, top + FH / 2 - hh, w, hh * 2);
         ctx.clip();
         const frame = frames[k];
-        if (frame.img && frame.img.complete && frame.img.naturalWidth) {
-          const iw = frame.img.naturalWidth;
-          const ih = frame.img.naturalHeight;
+        const view = shown(frame);
+        if (view.image && view.image.complete && view.image.naturalWidth) {
+          const iw = view.image.naturalWidth;
+          const ih = view.image.naturalHeight;
           const ratio = Math.max(w / iw, FH / ih);
           const sw = w / ratio;
           const sh = FH / ratio;
-          const ox = (iw - sw) * frame.pos[0];
-          const oy = (ih - sh) * frame.pos[1];
+          const ox = (iw - sw) * view.pos[0];
+          const oy = (ih - sh) * view.pos[1];
           const t = hzz[k];
           const he = t * t * (3 - 2 * t);
           const z = 1 + he * 0.025;
@@ -227,7 +247,7 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
           const pw = sw / zz;
           const ph = sh / zz;
           ctx.drawImage(
-            frame.img,
+            view.image,
             ox + (sw - pw) / 2,
             oy + (sh - ph) / 2,
             pw,

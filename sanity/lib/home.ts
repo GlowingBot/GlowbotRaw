@@ -46,6 +46,12 @@ const HOME_QUERY = `{
       hotspot,
       asset,
       "aspect": asset->metadata.dimensions.aspectRatio
+    },
+    coverMobile{
+      alt,
+      hotspot,
+      asset,
+      "aspect": asset->metadata.dimensions.aspectRatio
     }
   },
   "services": *[_type == "service"]{
@@ -89,6 +95,7 @@ type HomeQuery = {
     date?: string | null;
     order?: number | null;
     cover?: ImageField;
+    coverMobile?: ImageField;
   }> | null;
   services?: Array<{
     title?: string | null;
@@ -165,7 +172,9 @@ function normalize(data: HomeQuery | null): HomeContent {
   const projects: RibbonProject[] = (data?.projects ?? [])
     .map((project) => {
       const cover = picture(project.cover ?? null, 3200);
+      const mobile = picture(project.coverMobile ?? null, 2400);
       const aspect = aspectOf(project.cover?.aspect);
+      const mobileAspect = aspectOf(project.coverMobile?.aspect);
       const name = text(project.title);
       const frame: RibbonProject = {
         src: cover?.src ?? "",
@@ -176,6 +185,11 @@ function normalize(data: HomeQuery | null): HomeContent {
         label: name || undefined,
       };
       if (aspect) frame.ar = aspect;
+      if (mobile?.src) {
+        frame.mobileSrc = mobile.src;
+        frame.mobilePos = focal(project.coverMobile?.hotspot);
+        if (mobileAspect) frame.mobileAr = mobileAspect;
+      }
       return {
         frame,
         order: typeof project.order === "number" && Number.isFinite(project.order) ? project.order : Number.POSITIVE_INFINITY,

@@ -95,9 +95,16 @@ export const project = defineType({
     }),
     imageWithAlt({
       name: "cover",
-      title: "Portada",
+      title: "Portada en web",
       description:
         "Horizontal o vertical. Arrastra el hotspot: ese punto es el encuadre de la tira.",
+    }),
+    imageWithAlt({
+      name: "coverMobile",
+      title: "Portada en mobile",
+      description:
+        "Vertical, para el teléfono. Si la dejas vacía, se usa la de web. El hotspot define el encuadre.",
+      required: false,
     }),
     defineField({
       name: "gallery",
