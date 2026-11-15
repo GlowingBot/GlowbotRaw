@@ -258,11 +258,12 @@ export default async function Home() {
                   {paragraph}
                 </p>
               ))}
-              <dl style={{ margin: 0, borderTop: "1px solid rgba(243,241,234,0.16)" }}>
-                <Fact label="Base" value="Ciudad de México" light />
-                <Fact label="Disciplinas" value="MTB, BMX, skate y deporte urbano" light />
-                <Fact label="Equipo" value="Canon 90D · 70-200 · Godox AD200" light />
-              </dl>
+              {about.base || about.disciplines ? (
+                <dl style={{ margin: 0, borderTop: "1px solid rgba(243,241,234,0.16)" }}>
+                  {about.base ? <Fact label="Base" value={about.base} light /> : null}
+                  {about.disciplines ? <Fact label="Disciplinas" value={about.disciplines} light /> : null}
+                </dl>
+              ) : null}
             </div>
             {about.portrait ? (
               <figure

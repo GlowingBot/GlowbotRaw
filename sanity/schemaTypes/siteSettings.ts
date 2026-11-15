@@ -40,6 +40,18 @@ export const siteSettings = defineType({
       rows: 6,
       description: "Separa los párrafos con una línea en blanco.",
     }),
+    defineField({
+      name: "base",
+      title: "Base",
+      type: "string",
+      description: "Ejemplo: Ciudad de México",
+    }),
+    defineField({
+      name: "disciplines",
+      title: "Disciplinas",
+      type: "string",
+      description: "Deportes que fotografías. Ejemplo: MTB, BMX, skate y deporte urbano",
+    }),
     imageWithAlt({
       name: "aboutPortrait",
       title: "Retrato",

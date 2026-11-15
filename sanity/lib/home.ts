@@ -9,6 +9,8 @@ const HOME_QUERY = `{
   "settings": *[_type == "siteSettings"][0]{
     heroTitle,
     aboutText,
+    base,
+    disciplines,
     email,
     instagram,
     heroImage{
@@ -65,6 +67,8 @@ type HomeQuery = {
   settings?: {
     heroTitle?: { line1?: string | null; line2?: string | null } | null;
     aboutText?: string | null;
+    base?: string | null;
+    disciplines?: string | null;
     email?: string | null;
     instagram?: string | null;
     heroImage?: ImageField;
@@ -143,7 +147,7 @@ function emptyHome(): HomeContent {
     hero: { image: null, line1: "", line2: "" },
     projects: [],
     services: [],
-    about: { paragraphs: [], portrait: null },
+    about: { paragraphs: [], portrait: null, base: "", disciplines: "" },
     contact: { email: "", instagram: "" },
   };
 }
@@ -201,6 +205,8 @@ function normalize(data: HomeQuery | null): HomeContent {
     about: {
       paragraphs: paragraphs(settings?.aboutText),
       portrait: picture(settings?.aboutPortrait ?? null, 1600),
+      base: text(settings?.base),
+      disciplines: text(settings?.disciplines),
     },
     contact: {
       email: emailOf(settings?.email),

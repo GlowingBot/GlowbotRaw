@@ -33,6 +33,8 @@ export type HomeContent = {
   about: {
     paragraphs: string[];
     portrait: HomeImage | null;
+    base: string;
+    disciplines: string;
   };
   contact: {
     email: string;
