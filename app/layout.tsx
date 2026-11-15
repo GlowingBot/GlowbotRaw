@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Anton, Geist, Geist_Mono } from "next/font/google";
+import type { ReactNode } from "react";
 import "./globals.css";
 
 const anton = Anton({
@@ -28,13 +29,21 @@ export const metadata: Metadata = {
   description: "Fotografío el movimiento · CDMX",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+  modal,
+}: LayoutProps<"/"> & { modal: ReactNode }) {
   return (
     <html
       lang="es"
       className={`${anton.variable} ${geist.variable} ${geistMono.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        <div id="site-frame">
+          <div id="site-shift">{children}</div>
+        </div>
+        {modal}
+      </body>
     </html>
   );
 }

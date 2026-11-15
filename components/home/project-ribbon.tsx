@@ -1,7 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import type { RibbonProject } from "./types";
+import { rememberSheetScroll } from "@/components/project/project-sheet";
 import { fontDisplay, fontMono, RevealTitle } from "./reveal-title";
 
 type Frame = RibbonProject & {
@@ -23,6 +25,9 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
   const nameRef = useRef<HTMLSpanElement>(null);
   const infoRef = useRef<HTMLSpanElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const routerRef = useRef(router);
+  routerRef.current = router;
   const count = projects.length;
   const trackHeight = count > 0 ? `${(count - 1) * 70 + 100}vh` : "100vh";
   const first = projects[0];
@@ -101,7 +106,10 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
 
     const onClick = () => {
       const href = hk >= 0 ? frames[hk]?.href : null;
-      if (href) window.location.href = href;
+      if (!href) return;
+      canvas.focus({ preventScroll: true });
+      rememberSheetScroll(window.scrollY);
+      routerRef.current.push(href, { scroll: false });
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -346,6 +354,7 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
           <canvas
             id="ribbon"
             ref={canvasRef}
+            tabIndex={-1}
             aria-label="Proyectos en una tira de fotos"
             style={{
               position: "absolute",
