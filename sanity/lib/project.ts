@@ -83,6 +83,8 @@ export type ProjectPageData = {
   statNumber: string;
   statLabel: string;
   gallery: ProjectPhoto[];
+  position: number;
+  total: number;
   next: { title: string; href: string } | null;
 };
 
@@ -129,6 +131,8 @@ function normalize(data: ProjectQuery | null, slug: string): ProjectPageData | n
 
   const index = neighbors.findIndex((item) => item.slug === slug);
   const next = neighbors.length > 1 ? neighbors[(index + 1) % neighbors.length] : null;
+  const position = index >= 0 ? index + 1 : 1;
+  const total = Math.max(neighbors.length, 1);
 
   return {
     title: text(project.title),
@@ -144,6 +148,8 @@ function normalize(data: ProjectQuery | null, slug: string): ProjectPageData | n
     statNumber: text(project.stat?.number),
     statLabel: text(project.stat?.label),
     gallery: (project.gallery ?? []).map((image) => photo(image)).filter((image) => image !== null),
+    position,
+    total,
     next: next ? { title: next.title || "Proyecto", href: `/proyectos/${encodeURIComponent(next.slug)}` } : null,
   };
 }

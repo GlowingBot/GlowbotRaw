@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
 const EASE_MS = 750;
+const STUDIO = "Guillermo López";
+const BRAND_MS = 400;
 
 let pendingScroll = 0;
 
@@ -23,7 +25,57 @@ export function ProjectSheet({ children }: { children: ReactNode }) {
   routerRef.current = router;
   const sheetRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<() => void>(() => {});
+  const brandRef = useRef(STUDIO);
   const [open, setOpen] = useState(false);
+  const [brand, setBrand] = useState(STUDIO);
+  const [leaving, setLeaving] = useState<string | null>(null);
+  const [swap, setSwap] = useState(false);
+
+  useEffect(() => {
+    const root = sheetRef.current;
+    if (!root) return;
+    let observer: IntersectionObserver | null = null;
+    let watching: Element | null = null;
+
+    const attach = () => {
+      const title = root.querySelector<HTMLElement>("#project-title");
+      if (!title || title === watching) return;
+      observer?.disconnect();
+      watching = title;
+      const face = root.querySelector(".sheet-bar-face");
+      const offset = face instanceof HTMLElement ? face.offsetHeight : 0;
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          const name = title.getAttribute("aria-label")?.trim() || STUDIO;
+          const next = entry.isIntersecting ? STUDIO : name;
+          if (next === brandRef.current) return;
+          const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          if (!reduce) {
+            setLeaving(brandRef.current);
+            setSwap(true);
+          }
+          brandRef.current = next;
+          setBrand(next);
+        },
+        { root, rootMargin: `-${offset}px 0px 0px 0px`, threshold: 0 },
+      );
+      observer.observe(title);
+    };
+
+    attach();
+    const mutations = new MutationObserver(attach);
+    mutations.observe(root, { childList: true, subtree: true });
+    return () => {
+      observer?.disconnect();
+      mutations.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!leaving) return;
+    const timer = window.setTimeout(() => setLeaving(null), BRAND_MS);
+    return () => window.clearTimeout(timer);
+  }, [leaving]);
 
   useLayoutEffect(() => {
     sheetRef.current?.focus({ preventScroll: true });
@@ -154,16 +206,28 @@ export function ProjectSheet({ children }: { children: ReactNode }) {
         tabIndex={-1}
       >
         <header className="sheet-bar">
-          <div className="sheet-grab" aria-hidden="true" />
-          <div className="sheet-bar-row">
-            <span className="sheet-brand">Guillermo López</span>
-            <button type="button" className="sheet-close" onClick={() => closeRef.current()}>
-              Cerrar
-              <span className="sheet-x" aria-hidden="true">
-                ✕
-              </span>
-            </button>
+          <div className="sheet-bar-face">
+            <div className="sheet-grab" aria-hidden="true" />
+            <div className="sheet-bar-row">
+              <div className="sheet-brand-slot" aria-live="polite">
+                {leaving ? (
+                  <span className="sheet-brand-out" aria-hidden="true">
+                    {leaving}
+                  </span>
+                ) : null}
+                <span key={brand} className={swap ? "sheet-brand sheet-brand-in" : "sheet-brand"}>
+                  {brand}
+                </span>
+              </div>
+              <button type="button" className="sheet-close" onClick={() => closeRef.current()}>
+                Cerrar
+                <span className="sheet-x" aria-hidden="true">
+                  ✕
+                </span>
+              </button>
+            </div>
           </div>
+          <div className="sheet-bar-fade" aria-hidden="true" />
         </header>
         {children}
       </div>

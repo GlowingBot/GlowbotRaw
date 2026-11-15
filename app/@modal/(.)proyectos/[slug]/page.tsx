@@ -22,7 +22,7 @@ export default function Page({ params }: PageProps<"/proyectos/[slug]">) {
   return (
     <ProjectSheet>
       <Suspense fallback={<div style={{ minHeight: "60vh" }} />}>
-        <ProjectScreen params={params} />
+        <ProjectScreen params={params} sheet />
       </Suspense>
     </ProjectSheet>
   );

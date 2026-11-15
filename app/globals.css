@@ -325,7 +325,7 @@ body {
       animation-range: normal, exit 0% exit 60%;
     }
 
-    h2.reveal .ch {
+    .reveal .ch {
       display: inline-block;
       animation: letterIn linear both;
       animation-timeline: view();
@@ -430,10 +430,20 @@ body {
 .sheet-bar {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 5;
+}
+
+.sheet-bar-face {
   background: rgba(247, 246, 243, 0.72);
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+}
+
+.sheet-bar-fade {
+  height: 24px;
+  margin-bottom: -24px;
+  background: linear-gradient(rgba(247, 246, 243, 0.72), transparent);
+  pointer-events: none;
 }
 
 .sheet-grab {
@@ -453,16 +463,70 @@ body {
   padding: 8px clamp(16px, 3vw, 40px) 12px;
 }
 
-.sheet-brand {
+.sheet-brand-slot {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 20px;
+  overflow: hidden;
+}
+
+.sheet-brand,
+.sheet-brand-out {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  color: #111111;
   font-family: var(--font-geist), ui-sans-serif, sans-serif;
   font-size: 15px;
   font-weight: 600;
+  line-height: 20px;
   letter-spacing: -0.01em;
-  color: #111111;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sheet-brand-in,
+.sheet-brand-out {
+  position: absolute;
+  inset: 0;
+}
+
+.sheet-brand-in {
+  animation: sheetBrandIn 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sheet-brand-out {
+  animation: sheetBrandOut 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes sheetBrandIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes sheetBrandOut {
+  from {
+    transform: none;
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
 }
 
 .sheet-close {
   display: inline-flex;
+  flex: none;
   align-items: center;
   gap: 10px;
   height: 40px;
@@ -505,7 +569,10 @@ body {
   #site-frame.is-behind,
   .sheet,
   .sheet-backdrop,
-  .sheet-x {
+  .sheet-x,
+  .sheet-brand-in,
+  .sheet-brand-out {
     transition: none;
+    animation: none;
   }
 }

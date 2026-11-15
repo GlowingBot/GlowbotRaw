@@ -56,9 +56,9 @@ export const project = defineType({
     }),
     defineField({
       name: "light",
-      title: "Iluminación",
+      title: "Equipo",
       type: "string",
-      description: "Ejemplo: Godox AD200 fuera de cuadro",
+      description: "Cámara, lente o luz, como se muestra en la ficha.",
     }),
     defineField({
       name: "riders",

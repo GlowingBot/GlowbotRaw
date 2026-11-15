@@ -42,26 +42,35 @@ const factValue: CSSProperties = {
   color: "#111111",
 };
 
-export async function ProjectScreen({ params }: { params: Promise<{ slug: string }> }) {
+function projectCount(position: number, total: number) {
+  const pad = (value: number) => String(value).padStart(2, "0");
+  return `Proyecto ${pad(position)} / ${pad(total)}`;
+}
+
+export async function ProjectScreen({
+  params,
+  sheet = false,
+}: {
+  params: Promise<{ slug: string }>;
+  sheet?: boolean;
+}) {
   const { slug } = await params;
   const project = await getProjectPage(slug);
   if (!project) notFound();
 
-  const meta = [project.place, project.date].filter(Boolean).join(" · ");
   const facts = [
     ["Lugar", project.place],
-    ["Disciplina", project.discipline],
     ["Fecha", project.date],
-  ].filter(([, value]) => value);
-  const gear = [
+    ["Disciplina", project.discipline],
     ["Cámara", project.camera],
     ["Lentes", project.lenses],
-    ["Iluminación", project.light],
+    ["Equipo", project.light],
   ].filter(([, value]) => value);
   const next = project.next ?? { title: "Proyectos", href: "/#trabajo" };
 
   return (
     <main className="site" style={{ background: "#F7F6F3", color: "#111111", fontFamily: fontText, fontSize: 16, lineHeight: 1.6 }}>
+      {sheet ? null : (
       <header style={{ padding: `24px ${gutter}` }}>
         <div
           style={{
@@ -87,14 +96,20 @@ export async function ProjectScreen({ params }: { params: Promise<{ slug: string
           </a>
         </div>
       </header>
+      )}
 
       <section style={{ padding: `clamp(48px, 6vw, 96px) ${gutter} 0` }}>
         <div style={{ position: "relative", zIndex: 2, maxWidth: 1600, margin: "0 auto", display: "flex", flexDirection: "column" }}>
           <div style={metaBar}>
-            <span>Proyecto destacado</span>
-            {meta ? <span style={{ color: "#787774" }}>{meta}</span> : null}
+            <span>{projectCount(project.position, project.total)}</span>
           </div>
-          <RevealTitle text={project.title || "Proyecto"} style={{ margin: "clamp(24px, 3vw, 48px) 0 0" }} />
+          <RevealTitle
+            as="h1"
+            id="project-title"
+            labelled
+            text={project.title || "Proyecto"}
+            style={{ margin: "clamp(24px, 3vw, 48px) 0 0" }}
+          />
 
           {project.summary || project.statNumber || project.statLabel ? (
             <div style={{ marginTop: "clamp(48px, 5vw, 80px)", display: "flex", flexDirection: "column", gap: 40, maxWidth: 760 }}>
@@ -152,19 +167,9 @@ export async function ProjectScreen({ params }: { params: Promise<{ slug: string
             </div>
           ) : null}
 
-          {facts.length || gear.length ? (
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                gap: "48px clamp(32px, 6vw, 120px)",
-                marginTop: "clamp(48px, 5vw, 80px)",
-              }}
-            >
-              {facts.length ? <FactList rows={facts} /> : null}
-              {gear.length ? <FactList rows={gear} /> : null}
+          {facts.length ? (
+            <div style={{ marginTop: "clamp(48px, 5vw, 80px)" }}>
+              <FactList rows={facts} />
             </div>
           ) : null}
 
@@ -172,6 +177,7 @@ export async function ProjectScreen({ params }: { params: Promise<{ slug: string
         </div>
       </section>
 
+      {sheet ? null : (
       <section style={{ padding: `clamp(120px, 12vw, 200px) ${gutter} 40px` }}>
         <div style={{ maxWidth: 1600, margin: "0 auto" }}>
           <a
@@ -193,6 +199,7 @@ export async function ProjectScreen({ params }: { params: Promise<{ slug: string
           </a>
         </div>
       </section>
+      )}
     </main>
   );
 }

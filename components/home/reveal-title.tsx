@@ -26,9 +26,15 @@ const hiddenLabel: CSSProperties = {
 export function RevealTitle({
   text,
   style,
+  as = "h2",
+  id,
+  labelled = false,
 }: {
   text: string;
   style?: CSSProperties;
+  as?: "h1" | "h2";
+  id?: string;
+  labelled?: boolean;
 }) {
   let index = 0;
   const letters: ReactNode[] = Array.from(text).map((char, key) => {
@@ -46,10 +52,12 @@ export function RevealTitle({
     );
   });
 
+  const Heading = as;
+
   return (
-    <h2 className="reveal" style={{ ...sectionTitle, ...style }}>
+    <Heading id={id} className="reveal" aria-label={labelled ? text : undefined} style={{ ...sectionTitle, ...style }}>
       <span aria-hidden="true">{letters}</span>
-      <span style={hiddenLabel}>{text}</span>
-    </h2>
+      {labelled ? null : <span style={hiddenLabel}>{text}</span>}
+    </Heading>
   );
 }
