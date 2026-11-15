@@ -136,10 +136,14 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
 
-      const GT = Math.max(16, Math.min(40, W * 0.03));
-      const FW = Math.min(1600 + 24, W - 2 * GT + 24);
+      const phone = W <= 700;
+      const GT = phone ? 0 : Math.max(16, Math.min(40, W * 0.03));
+      const FW = phone ? W : Math.min(1600 + 24, W - 2 * GT + 24);
       const BOT = H - 104;
-      const FH = Math.min(FW * 0.66, BOT - H * 0.1);
+      const phoneTop = Math.max(108, Math.min(132, H * 0.16));
+      const FH = phone
+        ? Math.max(220, BOT - phoneTop)
+        : Math.min(FW * 0.66, BOT - H * 0.1);
       const GAP = 24;
       const now = performance.now();
       const dt = Math.min(0.05, (now - (lt || now)) / 1000 || 0.016);
@@ -154,9 +158,8 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
           : 1 - Math.pow(-2 * ec + 2, 3) / 2;
       cp += (tp * (count - 1) - cp) * damp;
       setCurrent(Math.max(0, Math.min(count - 1, Math.round(cp))));
-      const phone = W <= 700;
-      const top = BOT - FH;
-      const full = FW - GAP;
+      const top = phone ? phoneTop : BOT - FH;
+      const full = phone ? W : FW - GAP;
       const shown = (frame: Frame) => {
         const useMobile = phone && Boolean(frame.mobileSrc);
         const image =
@@ -169,6 +172,7 @@ export function ProjectRibbon({ projects }: { projects: RibbonProject[] }) {
       };
       const ws = frames.map((frame) => {
         const view = shown(frame);
+        if (phone) return full;
         const aspect =
           view.image && view.image.naturalWidth
             ? view.image.naturalWidth / view.image.naturalHeight
