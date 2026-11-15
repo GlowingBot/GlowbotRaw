@@ -25,6 +25,7 @@ export type HomeImage = {
 export type HomeContent = {
   hero: {
     image: HomeImage | null;
+    mobileImage: HomeImage | null;
     line1: string;
     line2: string;
   };

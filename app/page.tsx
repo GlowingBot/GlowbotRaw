@@ -43,7 +43,7 @@ export default async function Home() {
         {hero.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            className="hero-img"
+            className={hero.mobileImage ? "hero-img hero-web" : "hero-img"}
             src={hero.image.src}
             alt={hero.image.alt}
             style={{
@@ -53,7 +53,22 @@ export default async function Home() {
               height: "100%",
               objectFit: "cover",
               objectPosition: hero.image.position,
-              display: "block",
+            }}
+          />
+        ) : null}
+        {hero.mobileImage ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            className="hero-img hero-mobile"
+            src={hero.mobileImage.src}
+            alt={hero.mobileImage.alt}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: hero.mobileImage.position,
             }}
           />
         ) : null}

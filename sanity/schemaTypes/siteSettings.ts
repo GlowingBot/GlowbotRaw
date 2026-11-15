@@ -8,8 +8,14 @@ export const siteSettings = defineType({
   fields: [
     imageWithAlt({
       name: "heroImage",
-      title: "Foto del hero",
-      description: "El hotspot define el encuadre.",
+      title: "Foto del hero en web",
+      description: "Horizontal. El hotspot define el encuadre.",
+    }),
+    imageWithAlt({
+      name: "heroImageMobile",
+      title: "Foto del hero en mobile",
+      description: "Vertical, para cubrir la pantalla del teléfono. Si la dejas vacía, se usa la de web.",
+      required: false,
     }),
     defineField({
       name: "heroTitle",

@@ -20,6 +20,13 @@ const HOME_QUERY = `{
       "width": asset->metadata.dimensions.width,
       "height": asset->metadata.dimensions.height
     },
+    heroImageMobile{
+      alt,
+      hotspot,
+      asset,
+      "width": asset->metadata.dimensions.width,
+      "height": asset->metadata.dimensions.height
+    },
     aboutPortrait{
       alt,
       hotspot,
@@ -72,6 +79,7 @@ type HomeQuery = {
     email?: string | null;
     instagram?: string | null;
     heroImage?: ImageField;
+    heroImageMobile?: ImageField;
     aboutPortrait?: ImageField;
   } | null;
   projects?: Array<{
@@ -144,7 +152,7 @@ function aspectOf(value: unknown): number | undefined {
 
 function emptyHome(): HomeContent {
   return {
-    hero: { image: null, line1: "", line2: "" },
+    hero: { image: null, mobileImage: null, line1: "", line2: "" },
     projects: [],
     services: [],
     about: { paragraphs: [], portrait: null, base: "", disciplines: "" },
@@ -197,6 +205,7 @@ function normalize(data: HomeQuery | null): HomeContent {
   return {
     hero: {
       image: picture(settings?.heroImage ?? null, 2400),
+      mobileImage: picture(settings?.heroImageMobile ?? null, 1600),
       line1: text(settings?.heroTitle?.line1),
       line2: text(settings?.heroTitle?.line2),
     },
